@@ -6,7 +6,7 @@ A jQuery Plugin to make a powerful 3D slider
 
 ## Introduction
 
-Based on `jquery.gallery.js` from `Pedro Botelho`
+Based on [`jquery.gallery.js`](http://tympanus.net/codrops/2012/02/06/3d-gallery-with-css3-and-jquery/) from `Pedro Botelho`
 
 [Detail Introduction](http://www.anotherhome.net/2063)
 
@@ -45,7 +45,11 @@ The following HTML structure is used for the carrousel:
 And this is how the gallery is initialized:
 
 ```
-$('#dg-container').gallery();
+$('#dg-container').gallery({
+    current: 0,
+    autoplay: true,
+    interval: 3000
+});
 ```
 
 ## Options
@@ -53,15 +57,23 @@ $('#dg-container').gallery();
 The following options are available:
 
 ```
-current		: 0,	
 // index of current item
+current		: 0,
 
-autoplay	: false,
 // slideshow on / off
+autoplay	: false,
 
-interval	: 2000  
 // time between transitions
+interval	: 2000
 ```
+
+## API
+
++ `$('#dg-container').gallery('play');` -- play
++ `$('#dg-container').gallery('stop');` -- stop
++ `$('#dg-container').gallery('next');` -- switch to the next picture
++ `$('#dg-container').gallery('prev');` -- switch to the previous picture
++ `$('#dg-container').gallery(3);` -- switch to the fourth picture
 
 ## License
 

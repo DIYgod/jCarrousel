@@ -14,7 +14,7 @@
 
     $.Gallery.defaults = {
         current: 0,	// index of current item
-        autoplay: false,// slideshow on / off
+        autoplay: true,// slideshow on / off
         interval: 3000  // time between transitions
     };
 
@@ -63,7 +63,7 @@
                     if (toMove === 0) {
                         return;
                     }
-                    clearTimeout(_self.slideshow);
+                    _self._stopSlideshow();
                     _self.current = toIndex;
                     _self.$items.css('z-index', '0');
                     _self.$items.addClass('dg-transition');
@@ -72,7 +72,9 @@
                     _self._layout();
                     _self.indexB = toIndex;
                     _self._showButton();
-                    _self._startSlideshow();
+                    if (_self.options.autoplay) {
+                        _self._startSlideshow();
+                    }
                 });
             }
         },
@@ -186,9 +188,11 @@
                 _self.$leftItm.off('click.gallery');
                 _self.$leftItm.on('click.gallery', function (event) {
                     if (!this.classList.contains('dg-transition')) {
-                        clearTimeout(_self.slideshow);
+                        _self._stopSlideshow();
                         _self._navigate('prev');
-                        _self._startSlideshow();
+                        if (_self.options.autoplay) {
+                            _self._startSlideshow();
+                        }
                     }
                 });
 
@@ -196,9 +200,11 @@
 
                 _self.$rightItm.off('click.gallery');
                 _self.$rightItm.on('click.gallery', function (event) {
-                    clearTimeout(_self.slideshow);
+                    _self._stopSlideshow();
                     _self._navigate('next');
-                    _self._startSlideshow();
+                    if (_self.options.autoplay) {
+                        _self._startSlideshow();
+                    }
                 });
             });
         },
@@ -427,22 +433,13 @@
             }, this.options.interval);
         },
 
-        destroy: function () {
-            this.$navPrev.off('.gallery');
-            this.$navNext.off('.gallery');
-            this.$wrapper.off('.gallery');
+        _stopSlideshow: function () {
+            clearTimeout(this.slideshow);
         }
     };
 
     $.fn.gallery = function (options) {
-        if (typeof options === 'string') {
-            var args = Array.prototype.slice.call(arguments, 1);
-            this.each(function () {
-                var instance = $.data(this, 'gallery');
-                instance[options].apply(instance, args);
-            });
-        }
-        else {
+        if (typeof options === 'object') {
             this.each(function () {
                 var instance = $.data(this, 'gallery');
                 if (!instance) {
@@ -450,12 +447,36 @@
                 }
             });
         }
+        else if (typeof options === 'string') {
+            this.each(function () {
+                var instance = $.data(this, 'gallery');
+                if (instance) {
+                    switch (options) {
+                        case 'play':
+                            instance._startSlideshow();
+                            instance.options.autoplay = true;
+                            break;
+                        case 'stop':
+                            instance._stopSlideshow();
+                            instance.options.autoplay = false;
+                            break;
+                        case 'next':
+                            instance._navigate('next');
+                            break;
+                        case 'prev':
+                            instance._navigate('prev');
+                            break;
+                    }
+                }
+            });
+        }
+        else if (typeof options === 'number') {
+            this.each(function () {
+                var instance = $.data(this, 'gallery');
+                instance.button[options].click();
+            });
+        }
         return this;
     };
-
-    $('#dg-container').gallery({
-        autoplay: true,
-        interval: 3000
-    });
 
 })(jQuery);
