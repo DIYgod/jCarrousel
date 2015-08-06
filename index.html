@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>3D Gallery with CSS3 and jQuery</title>
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="css/style.css"/>
+</head>
+<body>
+    <div class="banner">
+        <section id="dg-container" class="dg-container">
+            <div class="dg-wrapper">
+                <a ng-repeat="item in list.itemList" href="#" link="http://www.anotherhome.net">
+                    <img src="images/1.jpg">
+                </a>
+                <a ng-repeat="item in list.itemList" href="#" link="http://www.anotherhome.net">
+                    <img src="images/2.jpg">
+                </a>
+                <a ng-repeat="item in list.itemList" href="#" link="http://www.anotherhome.net">
+                    <img src="images/3.jpg">
+                </a>
+                <a ng-repeat="item in list.itemList" href="#" link="http://www.anotherhome.net">
+                    <img src="images/4.jpg">
+                </a>
+                <a ng-repeat="item in list.itemList" href="#" link="http://www.anotherhome.net">
+                    <img src="images/5.jpg">
+                </a>
+            </div>
+            <ol class="button" id="lightButton">
+                <li index="0">
+                <li index="1">
+                <li index="2">
+                <li index="3">
+                <li index="4">
+            </ol>
+            <nav>
+                <span class="dg-prev"></span>
+                <span class="dg-next"></span>
+            </nav>
+        </section>
+    </div>
+    <script src="js/modernizr.custom.53451.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="js/jquery.carrousel.js"></script>
+    <script >
+        $(function () {
+            $('#dg-container').gallery();
+        });
+    </script>
+</body>
+</html>
