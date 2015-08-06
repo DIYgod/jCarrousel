@@ -7,21 +7,21 @@
  */
 (function ($, undefined) {
 
-    $.Gallery = function (options, element) {
+    $.carrousel = function (options, element) {
         this.$el = $(element);
         this._init(options);
     };
 
-    $.Gallery.defaults = {
+    $.carrousel.defaults = {
         current: 0,	// index of current item
         autoplay: true,// slideshow on / off
         interval: 3000  // time between transitions
     };
 
-    $.Gallery.prototype = {
+    $.carrousel.prototype = {
         // 初始化
         _init: function (options) {
-            this.options = $.extend(true, {}, $.Gallery.defaults, options);
+            this.options = $.extend(true, {}, $.carrousel.defaults, options);
 
             this.support3d = Modernizr.csstransforms3d;
             this.support2d = Modernizr.csstransforms;
@@ -128,17 +128,17 @@
             this.$rightItm.css(this._getCoordinates('right'));
             this.$currentItm.css(this._getCoordinates('center')).addClass('dg-center');
 
-            this.$leftItm.off('click.gallery');
-            this.$leftItm.on('click.gallery', function (event) {
+            this.$leftItm.off('click.carrousel');
+            this.$leftItm.on('click.carrousel', function (event) {
                 if (!this.classList.contains('dg-transition')) {
                     _self._navigate('prev');
                 }
             });
 
-            this.$currentItm.off('click.gallery');
+            this.$currentItm.off('click.carrousel');
 
-            this.$rightItm.off('click.gallery');
-            this.$rightItm.on('click.gallery', function (event) {
+            this.$rightItm.off('click.carrousel');
+            this.$rightItm.on('click.carrousel', function (event) {
                 if (!this.classList.contains('dg-transition')) {
                     _self._navigate('next');
                 }
@@ -164,17 +164,17 @@
 
         _loadEvents: function () {
             var _self = this;
-            this.$navPrev.on('click.gallery', function (event) {
+            this.$navPrev.on('click.carrousel', function (event) {
                 _self._navigate('prev');
                 return false;
             });
 
-            this.$navNext.on('click.gallery', function (event) {
+            this.$navNext.on('click.carrousel', function (event) {
                 _self._navigate('next');
                 return false;
             });
 
-            this.$wrapper.on('webkitTransitionEnd.gallery transitionend.gallery OTransitionEnd.gallery', function (event) {
+            this.$wrapper.on('webkitTransitionEnd.carrousel transitionend.carrousel OTransitionEnd.carrousel', function (event) {
                 _self.$currentItm.addClass('dg-center');
                 _self.$items.removeClass('dg-transition');
                 _self.isAnim = false;
@@ -185,8 +185,8 @@
                 _self.$rightItm[0].href = '#';
 
                 // 处理左右元素的点击事件
-                _self.$leftItm.off('click.gallery');
-                _self.$leftItm.on('click.gallery', function (event) {
+                _self.$leftItm.off('click.carrousel');
+                _self.$leftItm.on('click.carrousel', function (event) {
                     if (!this.classList.contains('dg-transition')) {
                         _self._stopSlideshow();
                         _self._navigate('prev');
@@ -196,10 +196,10 @@
                     }
                 });
 
-                _self.$currentItm.off('click.gallery');
+                _self.$currentItm.off('click.carrousel');
 
-                _self.$rightItm.off('click.gallery');
-                _self.$rightItm.on('click.gallery', function (event) {
+                _self.$rightItm.off('click.carrousel');
+                _self.$rightItm.on('click.carrousel', function (event) {
                     _self._stopSlideshow();
                     _self._navigate('next');
                     if (_self.options.autoplay) {
@@ -380,12 +380,12 @@
 
                         if (this.itemsCount > 5) {
                             this.$prevItm.addClass('dg-transition').css(this._getCoordinates('hide'));
-                            this.$prevItm.off('click.gallery');
+                            this.$prevItm.off('click.carrousel');
                         }
 
                         var nextEle = ( this.$nextItm.index() === this.itemsCount - 1 ) ? this.$items.eq(0) : this.$nextItm.next();
                         $(nextEle).addClass('dg-transition').css(this._getCoordinates('outright'));
-                        $(nextEle).off('click.gallery');
+                        $(nextEle).off('click.carrousel');
 
                         break;
 
@@ -409,12 +409,12 @@
 
                         if (this.itemsCount > 5) {
                             this.$nextItm.addClass('dg-transition').css(this._getCoordinates('hide'));
-                            this.$nextItm.off('click.gallery');
+                            this.$nextItm.off('click.carrousel');
                         }
 
                         var prevEle = ( this.$prevItm.index() === 0 ) ? this.$items.eq(this.itemsCount - 1) : this.$prevItm.prev();
                         $(prevEle).addClass('dg-transition').css(this._getCoordinates('outleft'));
-                        $(prevEle).off('click.gallery');
+                        $(prevEle).off('click.carrousel');
 
                         break;
                 }
@@ -438,18 +438,18 @@
         }
     };
 
-    $.fn.gallery = function (options) {
+    $.fn.carrousel = function (options) {
         if (typeof options === 'object') {
             this.each(function () {
-                var instance = $.data(this, 'gallery');
+                var instance = $.data(this, 'carrousel');
                 if (!instance) {
-                    $.data(this, 'gallery', new $.Gallery(options, this));
+                    $.data(this, 'carrousel', new $.carrousel(options, this));
                 }
             });
         }
         else if (typeof options === 'string') {
             this.each(function () {
-                var instance = $.data(this, 'gallery');
+                var instance = $.data(this, 'carrousel');
                 if (instance) {
                     switch (options) {
                         case 'play':
@@ -472,7 +472,7 @@
         }
         else if (typeof options === 'number') {
             this.each(function () {
-                var instance = $.data(this, 'gallery');
+                var instance = $.data(this, 'carrousel');
                 instance.button[options].click();
             });
         }

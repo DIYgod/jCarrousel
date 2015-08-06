@@ -42,10 +42,10 @@ The following HTML structure is used for the carrousel:
 </div>
 ```
 
-And this is how the gallery is initialized:
+And this is how the carrousel is initialized:
 
 ```
-$('#dg-container').gallery({
+$('#dg-container').carrousel({
     current: 0,
     autoplay: true,
     interval: 3000
@@ -69,11 +69,11 @@ interval	: 2000
 
 ## API
 
-+ `$('#dg-container').gallery('play');` -- play
-+ `$('#dg-container').gallery('stop');` -- stop
-+ `$('#dg-container').gallery('next');` -- switch to the next picture
-+ `$('#dg-container').gallery('prev');` -- switch to the previous picture
-+ `$('#dg-container').gallery(3);` -- switch to the fourth picture
++ `$('#dg-container').carrousel('play');` -- play
++ `$('#dg-container').carrousel('stop');` -- stop
++ `$('#dg-container').carrousel('next');` -- switch to the next picture
++ `$('#dg-container').carrousel('prev');` -- switch to the previous picture
++ `$('#dg-container').carrousel(3);`      -- switch to the fourth picture
 
 ## License
 
