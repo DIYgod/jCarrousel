@@ -8,7 +8,7 @@ A jQuery Plugin to make a powerful 3D slider
 
 Based on [`jquery.gallery.js`](http://tympanus.net/codrops/2012/02/06/3d-gallery-with-css3-and-jquery/) from `Pedro Botelho`
 
-[Detail Introduction](http://www.anotherhome.net/2063)
+[详情及中文说明](http://www.anotherhome.net/2063)
 
 [Demo](http://www.anotherhome.net/file/jCarrousel)
 
