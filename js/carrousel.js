@@ -5,7 +5,7 @@
  * Free to use under the MIT license.
  *
  */
-(function ($, undefined) {
+(function ($) {
 
     $.carrousel = function (options, element) {
         this.$el = $(element);
@@ -36,8 +36,8 @@
             this.box = $('.banner');
 
             this.indexB = 0;
-            this.CSSX;
-            this.CSSXout;
+            this.CSSX = 0;
+            this.CSSXout = 0;
 
             this.button[0].classList.add('light');
 
@@ -57,23 +57,39 @@
 
             var _self = this;
             for (var i = 0, len = this.button.length; i < len; i++) {     // 点击小圆点
-                _self.button[i].addEventListener('click', function () {
+                this.button[i].addEventListener('click', function() {
                     var toIndex = parseInt(this.getAttribute('index'));
                     var toMove = toIndex - _self.indexB;
-                    if (toMove === 0) {
-                        return;
-                    }
-                    _self._stopSlideshow();
-                    _self.current = toIndex;
-                    _self.$items.css('z-index', '0');
-                    _self.$items.addClass('dg-transition');
-                    _self.$items.css('opacity', '0');
-                    _self.$items.eq(_self.current).removeClass('dg-transition');
-                    _self._layout();
-                    _self.indexB = toIndex;
-                    _self._showButton();
-                    if (_self.options.autoplay) {
-                        _self._startSlideshow();
+                    switch (toMove) {
+                        case 0:
+                            break;
+                        case 1:
+                            _self._navigate('next', 'dg-transition');
+                            break;
+                        case -1:
+                            _self._navigate('prev', 'dg-transition');
+                            break;
+                        default:
+                            _self._stopSlideshow();
+                            var bTime = setInterval(function () {
+                                if (!_self.isAnim) {
+                                    if (!toMove) {
+                                        clearInterval(bTime);
+                                        if (_self.options.autoplay) {
+                                            _self._startSlideshow();
+                                        }
+                                    }
+                                    else if (toMove > 0) {
+                                        _self._navigate('next', 'dg-transition-fast');
+                                        toMove--;
+                                    }
+                                    else if (toMove < 0) {
+                                        _self._navigate('prev', 'dg-transition-fast');
+                                        toMove++;
+                                    }
+                                }
+                            }, 0);
+                            break;
                     }
                 });
             }
@@ -119,35 +135,40 @@
             _self.button[_self.indexB].classList.add('light');
         },
 
+        // 用来绑定点击事件
+        _click: function (element, move) {
+            var _self = this;
+            element.off('click.gallery');
+            element.on('click.gallery', function () {
+                if (!this.isAnim) {
+                    _self._navigate(move);
+                    if (_self.options.autoplay) {
+                        _self._startSlideshow();
+                    }
+                }
+            });
+        },
+
         // 初始样式
         _layout: function () {
             this._setItems();
 
-            var _self = this;
             this.$leftItm.css(this._getCoordinates('left'));
             this.$rightItm.css(this._getCoordinates('right'));
             this.$currentItm.css(this._getCoordinates('center')).addClass('dg-center');
 
-            this.$leftItm.off('click.carrousel');
-            this.$leftItm.on('click.carrousel', function (event) {
-                if (!this.classList.contains('dg-transition')) {
-                    _self._navigate('prev');
-                }
-            });
+            this._click(this.$leftItm, 'prev');
+            this._click(this.$prevItm, 'prev');
 
             this.$currentItm.off('click.carrousel');
 
-            this.$rightItm.off('click.carrousel');
-            this.$rightItm.on('click.carrousel', function (event) {
-                if (!this.classList.contains('dg-transition')) {
-                    _self._navigate('next');
-                }
-            });
+            this._click(this.$rightItm, 'next');
+            this._click(this.$nextItm, 'next');
 
             this.$nextItm.css(this._getCoordinates('outright'));
             this.$prevItm.css(this._getCoordinates('outleft'));
 
-            this.$currentItm[0].href = _self.$currentItm[0].getAttribute('link');
+            this.$currentItm[0].href = this.$currentItm[0].getAttribute('link');
         },
 
         // 更新图片位置
@@ -164,19 +185,20 @@
 
         _loadEvents: function () {
             var _self = this;
-            this.$navPrev.on('click.carrousel', function (event) {
+            this.$navPrev.on('click.carrousel', function () {
                 _self._navigate('prev');
                 return false;
             });
 
-            this.$navNext.on('click.carrousel', function (event) {
+            this.$navNext.on('click.carrousel', function () {
                 _self._navigate('next');
                 return false;
             });
 
-            this.$wrapper.on('webkitTransitionEnd.carrousel transitionend.carrousel OTransitionEnd.carrousel', function (event) {
+            this.$wrapper.on('webkitTransitionEnd.carrousel transitionend.carrousel OTransitionEnd.carrousel', function () {
                 _self.$currentItm.addClass('dg-center');
                 _self.$items.removeClass('dg-transition');
+                _self.$items.removeClass('dg-transition-fast');
                 _self.isAnim = false;
 
                 // 处理中间元素的href
@@ -185,27 +207,13 @@
                 _self.$rightItm[0].href = '#';
 
                 // 处理左右元素的点击事件
-                _self.$leftItm.off('click.carrousel');
-                _self.$leftItm.on('click.carrousel', function (event) {
-                    if (!this.classList.contains('dg-transition')) {
-                        _self._stopSlideshow();
-                        _self._navigate('prev');
-                        if (_self.options.autoplay) {
-                            _self._startSlideshow();
-                        }
-                    }
-                });
+                _self._click(_self.$leftItm, 'prev');
+                _self._click(_self.$prevItm, 'prev');
 
-                _self.$currentItm.off('click.carrousel');
+                _self.$currentItm.off('click.gallery');
 
-                _self.$rightItm.off('click.carrousel');
-                _self.$rightItm.on('click.carrousel', function (event) {
-                    _self._stopSlideshow();
-                    _self._navigate('next');
-                    if (_self.options.autoplay) {
-                        _self._startSlideshow();
-                    }
-                });
+                _self._click(_self.$rightItm, 'next');
+                _self._click(_self.$nextItm, 'next');
             });
         },
 
@@ -272,7 +280,7 @@
                             'opacity': 1,
                             'visibility': 'visible',
                             'z-index': 1
-                        }
+                        };
                         break;
                 }
             }
@@ -352,7 +360,8 @@
         },
 
         // 切换
-        _navigate: function (dir) {
+        _navigate: function (dir, speedClass) {
+            speedClass = speedClass || 'dg-transition';
             if (!this.isAnim) {
                 this._updateWidth();
 
@@ -368,23 +377,23 @@
                         this._showButton();
                         this.current = this.$rightItm.index();
                         // current item moves left
-                        this.$currentItm.addClass('dg-transition').css(this._getCoordinates('left'));
+                        this.$currentItm.addClass(speedClass).css(this._getCoordinates('left'));
 
                         // right item moves to the center
-                        this.$rightItm.addClass('dg-transition').css(this._getCoordinates('center'));
+                        this.$rightItm.addClass(speedClass).css(this._getCoordinates('center'));
 
                         // left item moves out
-                        this.$leftItm.addClass('dg-transition').css(this._getCoordinates('outleft'));
+                        this.$leftItm.addClass(speedClass).css(this._getCoordinates('outleft'));
 
-                        this.$nextItm.addClass('dg-transition').css(this._getCoordinates('right'));
+                        this.$nextItm.addClass(speedClass).css(this._getCoordinates('right'));
 
                         if (this.itemsCount > 5) {
-                            this.$prevItm.addClass('dg-transition').css(this._getCoordinates('hide'));
+                            this.$prevItm.addClass(speedClass).css(this._getCoordinates('hide'));
                             this.$prevItm.off('click.carrousel');
                         }
 
                         var nextEle = ( this.$nextItm.index() === this.itemsCount - 1 ) ? this.$items.eq(0) : this.$nextItm.next();
-                        $(nextEle).addClass('dg-transition').css(this._getCoordinates('outright'));
+                        $(nextEle).addClass(speedClass).css(this._getCoordinates('outright'));
                         $(nextEle).off('click.carrousel');
 
                         break;
@@ -397,23 +406,23 @@
                         this._showButton();
                         this.current = this.$leftItm.index();
                         // current item moves right
-                        this.$currentItm.addClass('dg-transition').css(this._getCoordinates('right'));
+                        this.$currentItm.addClass(speedClass).css(this._getCoordinates('right'));
 
                         // left item moves to the center
-                        this.$leftItm.addClass('dg-transition').css(this._getCoordinates('center'));
+                        this.$leftItm.addClass(speedClass).css(this._getCoordinates('center'));
 
                         // right item moves out
-                        this.$rightItm.addClass('dg-transition').css(this._getCoordinates('outright'));
+                        this.$rightItm.addClass(speedClass).css(this._getCoordinates('outright'));
 
-                        this.$prevItm.addClass('dg-transition').css(this._getCoordinates('left'));
+                        this.$prevItm.addClass(speedClass).css(this._getCoordinates('left'));
 
                         if (this.itemsCount > 5) {
-                            this.$nextItm.addClass('dg-transition').css(this._getCoordinates('hide'));
+                            this.$nextItm.addClass(speedClass).css(this._getCoordinates('hide'));
                             this.$nextItm.off('click.carrousel');
                         }
 
                         var prevEle = ( this.$prevItm.index() === 0 ) ? this.$items.eq(this.itemsCount - 1) : this.$prevItm.prev();
-                        $(prevEle).addClass('dg-transition').css(this._getCoordinates('outleft'));
+                        $(prevEle).addClass(speedClass).css(this._getCoordinates('outleft'));
                         $(prevEle).off('click.carrousel');
 
                         break;
@@ -427,7 +436,7 @@
         _startSlideshow: function () {
             var _self = this;
             this.slideshow = setInterval(function () {
-                if ($('.dg-center')[0] && !$('.dg-center')[0].classList.contains('dg-transition')) {
+                if ($('.dg-center')[0] && !_self.isAnim) {
                     _self._navigate('next');
                 }
             }, this.options.interval);

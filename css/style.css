@@ -57,6 +57,10 @@
     transition: all 0.5s ease-in-out;
 }
 
+.dg-wrapper a.dg-transition-fast {
+    transition: all 0.2s ease-in-out;
+}
+
 .dg-container nav {
     display: none;
 }
