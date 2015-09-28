@@ -369,9 +369,7 @@
             speedClass = speedClass || 'dg-transition';
             if (!this.isAnim) {
                 this._updateWidth();
-
                 this.isAnim = true;
-                var _self = this;
 
                 switch (dir) {
                     case 'next' :
