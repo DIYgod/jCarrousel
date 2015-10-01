@@ -22,22 +22,12 @@
 }
 
 .dg-wrapper a {
-    width: 700px;
+    width: 100%;
     height: 180px;
     display: block;
     position: absolute;
     left: 0;
     top: 0;
-}
-
-.dg-wrapper a:before {
-    position: absolute;
-    display: block;
-    content: "";
-    width: 700px;
-    height: 180px;
-    box-shadow: 0px 2px 0px 0px rgba(255, 255, 255, 0.10) inset, 0px 0px 0px 1px rgba(0, 0, 0, 0.20) inset;
-    border-radius: 4px;
 }
 
 .dg-wrapper a:first-child {
@@ -48,7 +38,7 @@
     display: block;
     box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.20);
     border-radius: 4px;
-    width: 700px;
+    width: 100%;
     height: 180px;
     background: #fff;
 }

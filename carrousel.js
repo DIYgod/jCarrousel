@@ -39,6 +39,7 @@
             this.$navNext = this.$nav.find('.dg-next');
             this.button = $('#lightButton li');
             this.box = $('.banner');
+            this.imgWidth = $('.banner .dg-wrapper img').width();
 
             this.indexB = 0;
             this.CSSX = 0;
@@ -104,26 +105,22 @@
         _updateWidth: function () {
             if (this.support3d) {
                 if (document.body.clientWidth < 1300) {
-                    this.CSSX = ($(this.box).width() - 500) / 2;
-                    this.CSSXout = ($(this.box).width()) / 10;
+                    this.CSSX = ($(this.box).width() - 10 - this.imgWidth * 0.7) / 2;
+                    this.CSSXout = 0;
                 }
-                else if (document.body.clientWidth >= 1300 && document.body.clientWidth <= 1500) {
-                    this.CSSX = ($(this.box).width() - 700) / 1.8;
-                    this.CSSXout = ($(this.box).width() - 500) / 1.3;
-                }
-                else {
-                    this.CSSX = ($(this.box).width() - 700) / 1.9;
-                    this.CSSXout = ($(this.box).width() - 500) / 1.4;
+                else if (document.body.clientWidth >= 1300) {
+                    this.CSSX = ($(this.box).width() * 1.2 - 10 - this.imgWidth * 0.5) / 2 * 0.5;
+                    this.CSSXout = ($(this.box).width() * 1.2 - 10 - this.imgWidth * 0.5) / 2;
                 }
             }
             else if (this.support2d) {
                 if (document.body.clientWidth < 1464) {
-                    this.CSSX = ($(this.box).width() - 10) / 2 - 315;
+                    this.CSSX = ($(this.box).width() - 10 - this.imgWidth * 0.9) / 2;
                     this.CSSXout = 0;
                 }
                 else if (document.body.clientWidth >= 1464) {
-                    this.CSSX = (($(this.box).width() - 10) / 2 - 280) * 0.7;
-                    this.CSSXout = ($(this.box).width() - 10) / 2 - 280;
+                    this.CSSX = (($(this.box).width() - 10 - this.imgWidth * 0.8) / 2) * 0.7;
+                    this.CSSXout = ($(this.box).width() - 10 - this.imgWidth * 0.8) / 2;
                 }
             }
         },
