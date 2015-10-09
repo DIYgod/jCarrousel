@@ -1,8 +1,11 @@
 # jCarrousel
 
-A jQuery Plugin to make a powerful 3D slider
+[![npm](https://img.shields.io/npm/v/jcarrousel.svg)](https://www.npmjs.com/package/jcarrousel)
+[![npm](https://img.shields.io/npm/l/jcarrousel.svg)](https://www.npmjs.com/package/jcarrousel)
+[![npm](https://img.shields.io/npm/dt/jcarrousel.svg)](https://www.npmjs.com/package/jcarrousel)
+[![GitHub issues](https://img.shields.io/github/issues/DIYgod/jCarrousel.svg)](https://github.com/DIYgod/jCarrousel/issues)
 
-----
+A jQuery Plugin to make a powerful 3D slider
 
 ## Introduction
 

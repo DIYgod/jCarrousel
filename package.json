@@ -1,0 +1,25 @@
+{
+  "name": "jcarrousel",
+  "version": "1.0.0",
+  "description": "A jQuery Plugin to make a powerful 3D slider",
+  "main": "carrousel.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DIYgod/jCarrousel.git"
+  },
+  "keywords": [
+    "slider",
+    "jQuery",
+    "Plugin",
+    "jCarrousel"
+  ],
+  "author": "DIYgod",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/DIYgod/jCarrousel/issues"
+  },
+  "homepage": "https://github.com/DIYgod/jCarrousel#readme"
+}
