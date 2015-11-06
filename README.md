@@ -3,7 +3,6 @@
 [![npm](https://img.shields.io/npm/v/jcarrousel.svg?style=flat-square)](https://www.npmjs.com/package/jcarrousel)
 [![npm](https://img.shields.io/npm/l/jcarrousel.svg?style=flat-square)](https://www.npmjs.com/package/jcarrousel)
 [![npm](https://img.shields.io/npm/dt/jcarrousel.svg?style=flat-square)](https://www.npmjs.com/package/jcarrousel)
-[![GitHub issues](https://img.shields.io/github/issues/DIYgod/jCarrousel.svg?style=flat-square)](https://github.com/DIYgod/jCarrousel/issues)
 
 A jQuery Plugin to make a powerful 3D slider
 
