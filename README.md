@@ -1,9 +1,9 @@
 # jCarrousel
 
-[![npm](https://img.shields.io/npm/v/jcarrousel.svg)](https://www.npmjs.com/package/jcarrousel)
-[![npm](https://img.shields.io/npm/l/jcarrousel.svg)](https://www.npmjs.com/package/jcarrousel)
-[![npm](https://img.shields.io/npm/dt/jcarrousel.svg)](https://www.npmjs.com/package/jcarrousel)
-[![GitHub issues](https://img.shields.io/github/issues/DIYgod/jCarrousel.svg)](https://github.com/DIYgod/jCarrousel/issues)
+[![npm](https://img.shields.io/npm/v/jcarrousel.svg?style=flat-square)](https://www.npmjs.com/package/jcarrousel)
+[![npm](https://img.shields.io/npm/l/jcarrousel.svg?style=flat-square)](https://www.npmjs.com/package/jcarrousel)
+[![npm](https://img.shields.io/npm/dt/jcarrousel.svg?style=flat-square)](https://www.npmjs.com/package/jcarrousel)
+[![GitHub issues](https://img.shields.io/github/issues/DIYgod/jCarrousel.svg?style=flat-square)](https://github.com/DIYgod/jCarrousel/issues)
 
 A jQuery Plugin to make a powerful 3D slider
 
@@ -15,7 +15,12 @@ Based on [`jquery.gallery.js`](http://tympanus.net/codrops/2012/02/06/3d-gallery
 
 [Demo](http://www.anotherhome.net/file/jCarrousel)
 
-## How it works
+## Install
+```
+npm install jcarrousel
+```
+
+## Usage
 
 The following HTML structure is used for the carrousel:
 
@@ -60,22 +65,20 @@ $('#dg-container').carrousel({
 });
 ```
 
-## Options
-
 The following options are available:
 
 ```
 // index of current item
-current		: 0,
+current     : 0,
 
 // slideshow on / off
-autoplay	: false,
+autoplay    : false,
 
 // time between transitions
-interval	: 2000
+interval    : 2000
 ```
 
-## API
+API
 
 + `$('#dg-container').carrousel('play');` -- play
 + `$('#dg-container').carrousel('stop');` -- stop
