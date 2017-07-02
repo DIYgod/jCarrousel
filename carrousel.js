@@ -41,11 +41,11 @@
             this.box = $('.banner');
             this.imgWidth = $('.banner .dg-wrapper img').width();
 
-            this.indexB = 0;
+            this.indexB = this.options.current;
             this.CSSX = 0;
             this.CSSXout = 0;
 
-            this.button[0].classList.add('light');
+            this.button[this.indexB].classList.add('light');
 
             this.current = this.options.current;
             this.isAnim = false;
@@ -86,12 +86,24 @@
                                         }
                                     }
                                     else if (toMove > 0) {
-                                        _self._navigate('next', 'dg-transition-fast');
-                                        toMove--;
+                                        if (toMove == 1){
+                                            _self._navigate('next', 'dg-transition-ease');
+                                            toMove--;
+                                        }
+                                        else {
+                                            _self._navigate('next', 'dg-transition-fast');
+                                            toMove--;
+                                        }
                                     }
                                     else if (toMove < 0) {
-                                        _self._navigate('prev', 'dg-transition-fast');
-                                        toMove++;
+                                        if (toMove == -1){
+                                            _self._navigate('prev', 'dg-transition-ease');
+                                            toMove++;
+                                        }
+                                        else {
+                                            _self._navigate('prev', 'dg-transition-fast');
+                                            toMove++;
+                                        }
                                     }
                                 }
                             }, 0);
@@ -201,6 +213,7 @@
                 _self.$currentItm.addClass('dg-center');
                 _self.$items.removeClass('dg-transition');
                 _self.$items.removeClass('dg-transition-fast');
+                _self.$items.removeClass('dg-transition-ease');
                 _self.isAnim = false;
 
                 // 处理中间元素的href
@@ -363,7 +376,8 @@
 
         // 切换
         _navigate: function (dir, speedClass) {
-            speedClass = speedClass || 'dg-transition';
+            speedClass = speedClass || 'dg-transition' || 'dg-transition-ease';
+            console.log(speedClass);
             if (!this.isAnim) {
                 this._updateWidth();
 

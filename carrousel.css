@@ -48,7 +48,11 @@
 }
 
 .dg-wrapper a.dg-transition-fast {
-    transition: all 0.2s ease-in-out;
+    transition: all 0.2s linear;
+}
+
+.dg-wrapper a.dg-transition-ease {
+    transition: all 0.2s ease;
 }
 
 .dg-container nav {
@@ -69,9 +73,9 @@
 }
 
 .dg-container .button {
-     position: relative;
-     z-index: 5;
- }
+    position: relative;
+    z-index: 5;
+}
 
 .dg-container .button li {
     cursor: pointer;
